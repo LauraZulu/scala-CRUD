@@ -43,13 +43,18 @@ class DoobieUserRepositoryInterpreter[F[_]: Bracket[?[_], Throwable]](val xa: Tr
   import UserSQL._
 
   def create(user: User): F[User] = 
-    insert(user).withUniqueGeneratedKeys[Long]("ID").map(id => user.copy(id = id.some)).transact(xa)
+    insert(user).withUniqueGeneratedKeys[Long]("id").map(id => user.copy(id = id.some)).transact(xa)
 
   def findByLegalId(legalId: String): OptionT[F, User] = OptionT(selectByLegalId(legalId).option.transact(xa))
 
-  def updateUser(legalId: String,user:User): F[Int] = update(legalId,user).run.transact(xa)
+  // def updateUser(legalId: String,user:User): F[Int] = update(legalId,user).run.transact(xa)
+  def updateUser(user: User): OptionT[F, User] =
+    OptionT.fromOption[F](Option(user.legalId)).semiflatMap { id =>
+      UserSQL.update(id,user).run.transact(xa).as(user)
+    }
 
-  def deleteUser(legalId: String) : F[Int] = delete(legalId).run.transact(xa)
+  def deleteUser(legalId: String) : OptionT[F, User] =
+    findByLegalId(legalId).semiflatMap(user => UserSQL.delete(legalId).run.transact(xa).as(user))
 }
 
 object DoobieUserRepositoryInterpreter {

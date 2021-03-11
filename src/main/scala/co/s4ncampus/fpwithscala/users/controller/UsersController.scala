@@ -29,16 +29,21 @@ class UsersController[F[_]: Sync] extends Http4sDsl[F] {
                 }
 
         }
-    private def updateUser(userService: UserService[F]): HttpRoutes[F] =
+    private def updateUser(userService: UserService[F]): HttpRoutes[F] = {
         HttpRoutes.of[F] {
-            case req @ PUT -> Root / id =>
+            case req@ PUT -> Root / id =>
                 val action = for {
                     user <- req.as[User]
-                    result <- userService.updateUser(id,user)
+                    updated = user.copy(legalId = id)
+                    result <- userService.updateUser(updated).value
                 } yield result
-                Ok(action)
-        }
 
+                action.flatMap {
+                    case Right(saved) => Ok(saved.asJson)
+                    case Left(UserNotFoundError) => NotFound("User not found")
+                }
+        }
+    }
     private def readUser(userService: UserService[F]): HttpRoutes[F] =
         HttpRoutes.of[F] {
             case GET -> Root / id =>
@@ -48,9 +53,14 @@ class UsersController[F[_]: Sync] extends Http4sDsl[F] {
 
     private def deleteUser(userService: UserService[F]): HttpRoutes[F] =
         HttpRoutes.of[F] {
-            case DELETE -> Root / id =>
-                val action = userService.deleteUser(id)
-                Ok(action)
+            case DELETE -> Root / legalId =>
+                val action = for {
+                    result <- userService.deleteUser(legalId).value
+                } yield result
+                action.flatMap {
+                    case Some(user) => Ok(user)
+                    case None => NotFound("User not found")
+                }
         }
 
     def endpoints(userService: UserService[F]): HttpRoutes[F] = {
