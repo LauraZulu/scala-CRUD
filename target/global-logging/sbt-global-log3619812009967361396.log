@@ -1,0 +1,15 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(run, Some(2be1eb12-f804-457d-9ada-d94564eac6b3), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Compile / run[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 4 Scala sources to /home/lvanessa/projectScala/fpwithscala-users/target/scala-2.13/classes ...[0m
+[0m[[0m[31merror[0m] [0m[0m'nowarn' is not a valid choice for '-Wunused'[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /home/lvanessa/projectScala/fpwithscala-users/target/scala-2.13/classes ...[0m
+[0m[[0m[31merror[0m] [0m[0m'nowarn' is not a valid choice for '-Wunused'[0m
+[0m[[0m[31merror[0m] [0m[0m/home/lvanessa/projectScala/fpwithscala-users/src/main/scala/co/s4ncampus/fpwithscala/users/infraestructure/repository/DoobieUserRepositoryInterpreter.scala:26:7: class DoobieUserRepositoryInterpreter needs to be abstract. Missing implementation for:[0m
+[0m[[0m[31merror[0m] [0m[0m  def read(legalId: String): F[co.s4ncampus.fpwithscala.users.domain.User] // inherited from trait UserRepositoryAlgebra[0m
+[0m[[0m[31merror[0m] [0m[0mclass DoobieUserRepositoryInterpreter[F[_]: Bracket[?[_], Throwable]](val xa: Transactor[F])[0m
+[0m[[0m[31merror[0m] [0m[0m      ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[31merror[0m] [0m[0m(Compile / [31mcompileIncremental[0m) Compilation failed[0m
+[0m[[0m[31merror[0m] [0m[0mTotal time: 6 s, completed Mar 10, 2021 1:36:13 PM[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m

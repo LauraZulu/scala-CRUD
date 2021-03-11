@@ -1,0 +1,5 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(run, Some(bc4859f8-25d1-44e0-b0f5-083e2dab0f36), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Compile / run[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 12 Scala sources to /home/lvanessa/projectScala/fpwithscala-users/target/scala-2.13/classes ...[0m
+[0m[[0m[31merror[0m] [0m[0m'nowarn' is not a valid choice for '-Wunused'[0m

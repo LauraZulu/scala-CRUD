@@ -1,0 +1,12 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(run, Some(95242d5f-e11a-4c3f-af17-5905c717bcd9), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Compile / run[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 6 Scala sources to /home/lvanessa/projectScala/fpwithscala-users/target/scala-2.13/classes ...[0m
+[0m[[0m[31merror[0m] [0m[0m'nowarn' is not a valid choice for '-Wunused'[0m
+[0m[[0m[31merror[0m] [0m[0m/home/lvanessa/projectScala/fpwithscala-users/src/main/scala/co/s4ncampus/fpwithscala/users/controller/UsersController.scala:49:17: private method deleteUser in class UsersController is never used[0m
+[0m[[0m[31merror[0m] [0m[0m    private def deleteUser(userService: UserService[F]): HttpRoutes[F] =[0m
+[0m[[0m[31merror[0m] [0m[0m                ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[31merror[0m] [0m[0m(Compile / [31mcompileIncremental[0m) Compilation failed[0m
+[0m[[0m[31merror[0m] [0m[0mTotal time: 6 s, completed Mar 10, 2021 7:50:49 PM[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m

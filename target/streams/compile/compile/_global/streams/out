@@ -1,0 +1,4 @@
+[0m[[0m[31merror[0m] [0m[0m/home/lvanessa/projectScala/fpwithscala-users/src/main/scala/co/s4ncampus/fpwithscala/users/controller/UsersController.scala:49:17: private method deleteUser in class UsersController is never used[0m
+[0m[[0m[31merror[0m] [0m[0m    private def deleteUser(userService: UserService[F]): HttpRoutes[F] =[0m
+[0m[[0m[31merror[0m] [0m[0m                ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

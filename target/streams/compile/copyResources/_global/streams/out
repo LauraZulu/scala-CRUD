@@ -1,0 +1,4 @@
+[0m[[0m[0mdebug[0m] [0m[0mCopy resource mappings: [0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/home/lvanessa/projectScala/fpwithscala-users/src/main/resources/logback.xml,/home/lvanessa/projectScala/fpwithscala-users/target/scala-2.13/classes/logback.xml)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/home/lvanessa/projectScala/fpwithscala-users/src/main/resources/reference.conf,/home/lvanessa/projectScala/fpwithscala-users/target/scala-2.13/classes/reference.conf)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/home/lvanessa/projectScala/fpwithscala-users/src/main/resources/db/migration/V1__InitialDatabaseSetup.sql,/home/lvanessa/projectScala/fpwithscala-users/target/scala-2.13/classes/db/migration/V1__InitialDatabaseSetup.sql)[0m
