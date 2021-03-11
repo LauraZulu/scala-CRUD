@@ -8,5 +8,4 @@ trait UserRepositoryAlgebra[F[_]] {
   def findByLegalId(legalId: String): OptionT[F, User]
   def updateUser(legalId:String, user: User):F[Int]
   def deleteUser(legalId: String) : F[Int]
-  //def read(legalId: String): F[User]
 }

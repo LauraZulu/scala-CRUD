@@ -23,11 +23,10 @@ private object UserSQL {
 
   def update(legalId: String,user: User): Update0 = sql"""
     UPDATE USERS
-    SET ID = ${user.id}
-    SET FIRST_NAME = ${user.firstName}
-    SET LAST_NAME = ${user.lastName}
-    SET EMAIL = ${user.email}
-    SET PHONE = ${user.phone}
+    SET FIRST_NAME = ${user.firstName},
+    LAST_NAME = ${user.lastName},
+    EMAIL = ${user.email},
+    PHONE = ${user.phone}
     WHERE LEGAL_ID = $legalId
        """.update
 

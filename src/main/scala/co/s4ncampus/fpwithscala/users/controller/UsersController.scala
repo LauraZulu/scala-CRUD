@@ -53,20 +53,6 @@ class UsersController[F[_]: Sync] extends Http4sDsl[F] {
                 Ok(action)
         }
 
-    /* private def readUser(userService: UserService[F]): HttpRoutes[F] =
-         HttpRoutes.of[F] {
-             case req @ POST -> Root =>
-                 val action = for {
-                     user <- req.as[User]
-                     result <- userService.read(user.legalId).value
-                 } yield result
-
-                 action.flatMap {
-                     case Right(saved) => Ok(saved.asJson)
-                     case Left(UserAlreadyExistsError(existing)) => Conflict(s"The user with legal id ${existing.legalId} already exists")
-                 }
-         }*/
-
     def endpoints(userService: UserService[F]): HttpRoutes[F] = {
         //To convine routes use the function `<+>`
         createUser(userService) <+> updateUser(userService) <+> readUser(userService) <+> deleteUser(userService)
