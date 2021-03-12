@@ -11,15 +11,9 @@ class UserValidationInterpreter[F[_]: Applicative](repository: UserRepositoryAlg
 
   def exists(userId: Option[String]): EitherT[F, UserNotFoundError.type, Unit] =
     userId match {
-      case Some(id) =>
-        repository
-          .findByLegalId(id)
-          .toRight(UserNotFoundError)
-          .void
-      case None =>
-        EitherT.left[Unit](UserNotFoundError.pure[F])
+      case Some(id) => repository.findByLegalId(id).toRight(UserNotFoundError).void
+      case None => EitherT.left[Unit](UserNotFoundError.pure[F])
     }
-
 }
 
 object UserValidationInterpreter {

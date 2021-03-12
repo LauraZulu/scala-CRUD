@@ -27,27 +27,36 @@ class UsersController[F[_]: Sync] extends Http4sDsl[F] {
                     case Right(saved) => Ok(saved.asJson)
                     case Left(UserAlreadyExistsError(existing)) => Conflict(s"The user with legal id ${existing.legalId} already exists")
                 }
-
         }
     private def updateUser(userService: UserService[F]): HttpRoutes[F] = {
         HttpRoutes.of[F] {
-            case req@ PUT -> Root / id =>
+            case req@ PUT -> Root / legalId =>
                 val action = for {
                     user <- req.as[User]
-                    updated = user.copy(legalId = id)
+                    updated = user.copy(legalId = legalId)
                     result <- userService.updateUser(updated).value
                 } yield result
-
                 action.flatMap {
-                    case Right(saved) => Ok(saved.asJson)
+                    case Right(saved) => Ok(saved)
                     case Left(UserNotFoundError) => NotFound("User not found")
                 }
         }
     }
     private def readUser(userService: UserService[F]): HttpRoutes[F] =
         HttpRoutes.of[F] {
-            case GET -> Root / id =>
-                val action = userService.read(id).value
+            case GET -> Root / legalId =>
+                val action = for {
+                    result <- userService.read(legalId).value
+                } yield result
+                action.flatMap {
+                    case Some(user) => Ok(user)
+                    case None => NotFound("User not found")
+                }
+        }
+    private def readAll(userService: UserService[F]): HttpRoutes[F] =
+        HttpRoutes.of[F] {
+            case GET -> Root =>
+                val action = userService.readAll()
                 Ok(action)
         }
 
@@ -65,7 +74,11 @@ class UsersController[F[_]: Sync] extends Http4sDsl[F] {
 
     def endpoints(userService: UserService[F]): HttpRoutes[F] = {
         //To convine routes use the function `<+>`
-        createUser(userService) <+> updateUser(userService) <+> readUser(userService) <+> deleteUser(userService)
+          createUser(userService) <+>
+          updateUser(userService) <+>
+          readUser(userService) <+>
+          deleteUser(userService) <+>
+          readAll(userService)
     }
 
 }

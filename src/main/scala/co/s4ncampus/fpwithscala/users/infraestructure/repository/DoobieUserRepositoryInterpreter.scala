@@ -15,6 +15,11 @@ private object UserSQL {
     VALUES (${user.legalId}, ${user.firstName}, ${user.lastName}, ${user.email}, ${user.phone})
   """.update
 
+  def selectAll(): Query0[User] = sql"""
+    SELECT ID, LEGAL_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE
+    FROM USERS
+  """.query
+
   def selectByLegalId(legalId: String): Query0[User] = sql"""
     SELECT ID, LEGAL_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE
     FROM USERS
@@ -23,7 +28,8 @@ private object UserSQL {
 
   def update(legalId: String,user: User): Update0 = sql"""
     UPDATE USERS
-    SET FIRST_NAME = ${user.firstName},
+    SET
+    FIRST_NAME = ${user.firstName},
     LAST_NAME = ${user.lastName},
     EMAIL = ${user.email},
     PHONE = ${user.phone}
@@ -47,15 +53,16 @@ class DoobieUserRepositoryInterpreter[F[_]: Bracket[?[_], Throwable]](val xa: Tr
 
   def findByLegalId(legalId: String): OptionT[F, User] = OptionT(selectByLegalId(legalId).option.transact(xa))
 
-  // def updateUser(legalId: String,user:User): F[Int] = update(legalId,user).run.transact(xa)
+  def findAll(): F[List[User]] = selectAll().to[List].transact(xa)
+
   def updateUser(user: User): OptionT[F, User] =
-    OptionT.fromOption[F](Option(user.legalId)).semiflatMap { id =>
-      UserSQL.update(id,user).run.transact(xa).as(user)
+    OptionT.fromOption[F](Option(user.legalId)).semiflatMap { legalId =>
+      UserSQL.update(legalId,user).run.transact(xa).as(user)
     }
 
   def deleteUser(legalId: String) : OptionT[F, User] =
     findByLegalId(legalId).semiflatMap(user => UserSQL.delete(legalId).run.transact(xa).as(user))
-}
+  }
 
 object DoobieUserRepositoryInterpreter {
   def apply[F[_]: Bracket[?[_], Throwable]](xa: Transactor[F]): DoobieUserRepositoryInterpreter[F] =
